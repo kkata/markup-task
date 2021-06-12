@@ -9,7 +9,7 @@ const buttonClose = document.getElementById("button-close");
 
 function show() {
   modalInner.appendChild(loadingImg);
-  fetch("https://jsondata.okiba.me/v1/json/49ggL210609132113")
+  fetch("https://my-json-server.typicode.com/kkata/demo/db")
     .then((response) => {
       if (!response.ok) {
         throw Error(err.message);

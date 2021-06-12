@@ -3,7 +3,7 @@ const loadingImg = document.createElement("img");
 loadingImg.src = "../image/loading-circle-1.gif";
 
 function show() {
-  fetch("https://jsondata.okiba.me/v1/json/49ggL210609132113")
+  fetch("https://my-json-server.typicode.com/kkata/demo/db")
     .then((response) => {
       if (!response.ok) {
         throw Error(err.message);
