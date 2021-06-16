@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>18</title>
+    <style>
+      ul {
+        position: relative;
+      }
+      li {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #dots-wrap {
+        display: flex;
+      }
+      .dot {
+        width: 1em;
+        height: 1em;
+        border-radius: 1em;
+        background-color: #ccc;
+        margin: 0 10px;
+      }
+      .dot:hover {
+        cursor: pointer;
+      }
+      .dot.current {
+        background-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button" class="button-back-next" value="-1" id="button-back">
+      back
+    </button>
+    <button type="button" class="button-back-next" value="1" id="button-next">
+      next
+    </button>
+    <button type="button" id="button-auto">auto</button>
+    <button type="button" id="button-stop">stop</button>
+    <p><span id="count"></span>/<span id="all"></span></p>
+    <div id="dots-wrap"></div>
+    <ul id="slider"></ul>
+    <script src="./index.js"></script>
+  </body>
+</html>
