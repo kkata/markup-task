@@ -1,19 +1,13 @@
 const table = document.getElementById("table");
 
-function createThead(array) {
-  const sortButton =
-    '<button id="button-sort" type="button" data-sort="normal">sort</button>';
+function createTable(array) {
   let thead = "<thead><tr>";
   for (const [key, value] of Object.entries(array[0])) {
-    thead += `<th>${setHeadingText(key)}${key === "id" ? sortButton : ""}</th>`;
+    thead += `<th>${setHeadingText(key)}</th>`;
   }
   thead += "</tr></thead>";
 
-  return thead;
-}
-
-function createTbody(array) {
-  let tbody = '<tbody id="tbody">';
+  let tbody = "<tbody>";
   array.forEach((element) => {
     tbody += "<tr>";
     Object.entries(element).forEach(
@@ -23,11 +17,7 @@ function createTbody(array) {
   });
   tbody += "</tbody>";
 
-  return tbody;
-}
-
-function createTable(array) {
-  return createThead(array) + createTbody(array);
+  return thead + tbody;
 }
 
 function setHeadingText(key) {
@@ -45,8 +35,6 @@ function setHeadingText(key) {
   }
 }
 
-let userData;
-
 async function show() {
   try {
     const response = await fetch(
@@ -58,62 +46,13 @@ async function show() {
       setTimeout(() => {
         resolve(json);
         // reject("failed");
-      }, 0)
+      }, 3000)
     );
 
-    userData = json.userTable;
-
-    await table.insertAdjacentHTML("beforeend", createTable(userData));
-    document
-      .getElementById("button-sort")
-      .addEventListener("click", handleButton, false);
+    await table.insertAdjacentHTML("beforeend", createTable(json.userTable));
   } catch (err) {
     console.error(err);
   }
 }
 
 show();
-
-function sortData(data, key, order) {
-  return data.slice().sort((a, b) => {
-    switch (order) {
-      case "asc":
-        return a[key] - b[key];
-      case "desc":
-        return b[key] - a[key];
-      default:
-        break;
-    }
-  });
-}
-
-function handleButton(event) {
-  const target = event.currentTarget;
-  changeButtonState(target);
-  removeTbody();
-  table.insertAdjacentHTML(
-    "beforeend",
-    createTbody(sortData(userData, "id", target.dataset.sort))
-  );
-}
-
-function removeTbody() {
-  const tbody = document.getElementById("tbody");
-  table.removeChild(tbody);
-}
-
-function changeButtonState(target) {
-  switch (target.dataset.sort) {
-    case "normal":
-      target.dataset.sort = "asc";
-      break;
-    case "asc":
-      target.dataset.sort = "desc";
-      break;
-    case "desc":
-      target.dataset.sort = "normal";
-      break;
-    default:
-      break;
-  }
-}

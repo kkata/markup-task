@@ -1,11 +1,15 @@
 const table = document.getElementById("table");
 
 function createThead(array) {
-  const sortButton =
-    '<button id="button-sort" type="button" data-sort="normal">sort</button>';
+  const sortIdButton =
+    '<button class="button-sort" type="button" data-sort="normal" data-sort-type="id">sort</button>';
+  const sortAgeButton =
+    '<button class="button-sort" type="button" data-sort="normal" data-sort-type="age">sort</button>';
   let thead = "<thead><tr>";
   for (const [key, value] of Object.entries(array[0])) {
-    thead += `<th>${setHeadingText(key)}${key === "id" ? sortButton : ""}</th>`;
+    thead += `<th>${setHeadingText(key)}${key === "id" ? sortIdButton : ""}${
+      key === "age" ? sortAgeButton : ""
+    }</th>`;
   }
   thead += "</tr></thead>";
 
@@ -58,15 +62,16 @@ async function show() {
       setTimeout(() => {
         resolve(json);
         // reject("failed");
-      }, 0)
+      }, 30)
     );
 
     userData = json.userTable;
 
     await table.insertAdjacentHTML("beforeend", createTable(userData));
-    document
-      .getElementById("button-sort")
-      .addEventListener("click", handleButton, false);
+    const buttons = document.querySelectorAll(".button-sort");
+    buttons.forEach((element) => {
+      element.addEventListener("click", handleButton, false);
+    });
   } catch (err) {
     console.error(err);
   }
@@ -93,7 +98,9 @@ function handleButton(event) {
   removeTbody();
   table.insertAdjacentHTML(
     "beforeend",
-    createTbody(sortData(userData, "id", target.dataset.sort))
+    createTbody(
+      sortData(userData, target.dataset.sortType, target.dataset.sort)
+    )
   );
 }
 
