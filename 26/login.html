@@ -51,17 +51,17 @@
     </style>
   </head>
   <body>
-    <form action="" novalidate>
+    <form action="" novalidate onsubmit="return false;" id="form">
       <h1>ログイン</h1>
       <div>
         <label for="user">ユーザー名</label>
-        <input type="text" name="" id="user" required maxlength="15" />
+        <input type="text" name="name" id="user" required maxlength="15" />
       </div>
       <div>
         <label for="pw">パスワード</label>
         <input
           type="password"
-          name=""
+          name="password"
           id="pw"
           required
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
